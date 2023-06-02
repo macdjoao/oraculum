@@ -7,4 +7,4 @@ services:
       - POSTGRES_PASSWORD=${DOCKER_POSTGRES_PASSWORD}
       - POSTGRES_DB=${DOCKER_POSTGRES_DB}
     ports:
-      - 2345:2345
+      - 5440:5432
