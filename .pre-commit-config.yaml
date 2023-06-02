@@ -3,14 +3,14 @@ repos:
     hooks:
       - id: blue
         name: blue
-        entry: bash -c 'blue .'
+        entry: bash -c 'blue .; isort .'
         language: system
         pass_filenames: false
         stages: [commit]
-    hooks:
-      - id: isort
-        name: isort
-        entry: bash -c 'isort .'
-        language: system
-        pass_filenames: false
-        stages: [commit]
+    # hooks:
+    #   - id: isort
+    #     name: isort
+    #     entry: bash -c 'isort .'
+    #     language: system
+    #     pass_filenames: false
+    #     stages: [commit]
