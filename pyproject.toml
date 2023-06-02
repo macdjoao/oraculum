@@ -12,6 +12,7 @@ isort = "^5.12.0"
 pre-commit = "^3.3.2"
 sqlalchemy = "^2.0.15"
 psycopg2-binary = "^2.9.6"
+python-dotenv = "^1.0.0"
 
 
 [build-system]
