@@ -1,0 +1,10 @@
+version: '3.1'
+services:
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_USER=${DOCKER_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${DOCKER_POSTGRES_PASSWORD}
+      - POSTGRES_DB=${DOCKER_POSTGRES_DB}
+    ports:
+      - 2345:2345
