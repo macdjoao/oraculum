@@ -1,16 +1,9 @@
 repos:
 -   repo: local
     hooks:
-      - id: blue
-        name: blue
+      - id: format
+        name: format
         entry: bash -c 'blue .; isort .'
         language: system
         pass_filenames: false
         stages: [commit]
-    # hooks:
-    #   - id: isort
-    #     name: isort
-    #     entry: bash -c 'isort .'
-    #     language: system
-    #     pass_filenames: false
-    #     stages: [commit]
