@@ -2,8 +2,12 @@ from src.infra.configs.session import session
 from src.infra.entities.models import Player
 
 # Insert
-data_insert = Player(name='John')
+data_insert = Player(name='Doe')
 session.add(data_insert)
+session.commit()
+
+# Delete
+session.query(Player).filter(Player.name == 'John').delete()
 session.commit()
 
 # Select
