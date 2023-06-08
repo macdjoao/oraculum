@@ -2,13 +2,15 @@ from src.infra.repositories.grade import Grade as GradeRepository
 from src.infra.repositories.player import Player as PlayerRepository
 from src.infra.repositories.race import Race as RaceRepository
 
-# data = PlayerRepository()
+data = PlayerRepository()
 # data.insert(name='snow', race='hobbit', grade='sorcerer')
 # data.insert(name='Doe', race='Dwarf', grade='Mage')
-# data.update(name='John', level=2)
+data.update_level(name='snow', level=2)
+data.update_grade(name='snow', grade='wizard')
+data.update_race(name='snow', race='dwarf')
 # data.delete(name='John')
 # print(data.select_one(name='John'))
-# print(data.select_all())
+print(data.select_all())
 
 # data = RaceRepository()
 # data.insert(name='orc')
