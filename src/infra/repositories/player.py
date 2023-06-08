@@ -12,9 +12,9 @@ class Player:
         finally:
             session.close()
 
-    def insert(self, name):
+    def insert(self, name, race_id, grade_id):
         try:
-            data_insert = PlayerEntity(name=name)
+            data_insert = PlayerEntity(name=name, race=race_id, grade=grade_id)
             session.add(data_insert)
             session.commit()
             return data_insert
