@@ -32,6 +32,7 @@ class Grade:
             session.commit()
             return data_insert
         except Exception as exc:
+            session.rollback()
             return exc
         finally:
             session.close()
@@ -44,6 +45,7 @@ class Grade:
             session.commit()
             return f'Grade deleted: {name}'
         except Exception as exc:
+            session.rollback()
             return exc
         finally:
             session.close()
@@ -56,6 +58,7 @@ class Grade:
             session.commit()
             return f'Grade updated: {new_name.capitalize()}'
         except Exception as exc:
+            session.rollback()
             return exc
         finally:
             session.close()

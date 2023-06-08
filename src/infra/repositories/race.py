@@ -19,6 +19,7 @@ class Race:
             session.commit()
             return data_insert
         except Exception as exc:
+            session.rollback()
             return exc
         finally:
             session.close()
@@ -31,6 +32,7 @@ class Race:
             session.commit()
             return f'Race deleted: {name.capitalize()}'
         except Exception as exc:
+            session.rollback()
             return exc
         finally:
             session.close()
@@ -43,6 +45,7 @@ class Race:
             session.commit()
             return f'Race updated: {new_name.capitalize()}'
         except Exception as exc:
+            session.rollback()
             return exc
         finally:
             session.close()

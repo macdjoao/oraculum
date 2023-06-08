@@ -36,6 +36,7 @@ class Player:
             session.commit()
             return data_insert
         except Exception as exc:
+            session.rollback()
             return exc
         finally:
             session.close()
@@ -48,6 +49,7 @@ class Player:
             session.commit()
             return f'Player deleted: {name.capitalize()}'
         except Exception as exc:
+            session.rollback()
             return exc
         finally:
             session.close()
@@ -60,6 +62,7 @@ class Player:
             session.commit()
             return f'Player updated: {name.capitalize()}'
         except Exception as exc:
+            session.rollback()
             return exc
         finally:
             session.close()
@@ -72,6 +75,7 @@ class Player:
             session.commit()
             return f'Player updated: {name.capitalize()}'
         except Exception as exc:
+            session.rollback()
             return exc
         finally:
             session.close()
@@ -84,6 +88,7 @@ class Player:
             session.commit()
             return f'Player updated: {name.capitalize()}'
         except Exception as exc:
+            session.rollback()
             return exc
         finally:
             session.close()
