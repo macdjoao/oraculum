@@ -11,6 +11,7 @@ class Player(Base):
     name = Column(String, nullable=False)
     level = Column(Integer, default=1)
     race = Column(Integer, ForeignKey('races.id'))
+    grade = Column(Integer, ForeignKey('grades.id'))
 
     def __repr__(self):
         return f'Players (id = {self.id}, name = {self.name}, level = {self.level})'
