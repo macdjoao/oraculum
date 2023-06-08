@@ -23,21 +23,23 @@ class Grade:
         finally:
             session.close()
 
-    def delete(self, id):
+    def delete(self, name):
         try:
-            session.query(GradeEntity).filter(GradeEntity.id == id).delete()
+            session.query(GradeEntity).filter(
+                GradeEntity.name == name
+            ).delete()
             session.commit()
-            return f'Grade deleted: {id}'
+            return f'Grade deleted: {name}'
         except Exception as exc:
             return exc
         finally:
             session.close()
 
-    def update(self, id, name):
+    def update(self, actual_name, new_name):
         try:
-            session.query(GradeEntity).filter(GradeEntity.id == id).update(
-                {'name': name}
-            )
+            session.query(GradeEntity).filter(
+                GradeEntity.name == actual_name
+            ).update({'name': new_name})
             session.commit()
             return f'Grade updated: {id}'
         except Exception as exc:
