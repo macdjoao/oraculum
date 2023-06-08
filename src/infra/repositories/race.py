@@ -3,9 +3,22 @@ from src.infra.entities.models import Race as RaceEntity
 
 
 class Race:
-    def select(self):
+    def select_all(self):
         try:
             data = session.query(RaceEntity).all()
+            return data
+        except Exception as exc:
+            return exc
+        finally:
+            session.close()
+
+    def select_one(self, name: str):
+        try:
+            data = (
+                session.query(RaceEntity)
+                .filter(RaceEntity.name == name.capitalize())
+                .first()
+            )
             return data
         except Exception as exc:
             return exc
