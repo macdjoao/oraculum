@@ -24,5 +24,10 @@ from src.infra.repositories.player import Player as PlayerRepository
 # After all
 # session.close()
 
+
 data = PlayerRepository()
+# data.insert('Cohle')
+# data.insert('Grimmes')
+# data.update(name='Soprano', level=2)
+# data.delete('Shelby')
 print(data.select())
