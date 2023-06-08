@@ -23,25 +23,23 @@ class Player:
         finally:
             session.close()
 
-    def delete(self, name):
+    def delete(self, id):
         try:
-            session.query(PlayerEntity).filter(
-                PlayerEntity.name == name
-            ).delete()
+            session.query(PlayerEntity).filter(PlayerEntity.id == id).delete()
             session.commit()
-            return f'Player deleted: {name}'
+            return f'Player deleted: {id}'
         except Exception as exc:
             return exc
         finally:
             session.close()
 
-    def update(self, name, level):
+    def update(self, id, level):
         try:
-            session.query(PlayerEntity).filter(
-                PlayerEntity.name == name
-            ).update({'level': level})
+            session.query(PlayerEntity).filter(PlayerEntity.id == id).update(
+                {'level': level}
+            )
             session.commit()
-            return f'Player updated: {name}'
+            return f'Player updated: {id}'
         except Exception as exc:
             return exc
         finally:
