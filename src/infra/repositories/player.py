@@ -12,11 +12,11 @@ class Player:
         finally:
             session.close()
 
-    def select_one(self, id):
+    def select_one(self, name):
         try:
             data = (
                 session.query(PlayerEntity)
-                .filter(PlayerEntity.id == id)
+                .filter(PlayerEntity.name == name)
                 .first()
             )
             return data
@@ -25,9 +25,9 @@ class Player:
         finally:
             session.close()
 
-    def insert(self, name, race_id, grade_id):
+    def insert(self, name, race, grade):
         try:
-            data_insert = PlayerEntity(name=name, race=race_id, grade=grade_id)
+            data_insert = PlayerEntity(name=name, race=race, grade=grade)
             session.add(data_insert)
             session.commit()
             return data_insert
@@ -36,23 +36,25 @@ class Player:
         finally:
             session.close()
 
-    def delete(self, id):
+    def delete(self, name):
         try:
-            session.query(PlayerEntity).filter(PlayerEntity.id == id).delete()
+            session.query(PlayerEntity).filter(
+                PlayerEntity.name == name
+            ).delete()
             session.commit()
-            return f'Player deleted: {id}'
+            return f'Player deleted: {name}'
         except Exception as exc:
             return exc
         finally:
             session.close()
 
-    def update(self, id, level):
+    def update(self, name, level):
         try:
-            session.query(PlayerEntity).filter(PlayerEntity.id == id).update(
-                {'level': level}
-            )
+            session.query(PlayerEntity).filter(
+                PlayerEntity.name == name
+            ).update({'level': level})
             session.commit()
-            return f'Player updated: {id}'
+            return f'Player updated: {name}'
         except Exception as exc:
             return exc
         finally:
