@@ -9,6 +9,7 @@ data = PlayerRepository()
 # data.insert(name='Shelby', race_id=3, grade_id=1)
 # data.update(id=1, level=2)
 # data.delete(id=2)
+print(data.select_one(id=3))
 # print(data.select_all())
 
 # data = RaceRepository()

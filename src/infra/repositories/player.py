@@ -14,7 +14,11 @@ class Player:
 
     def select_one(self, id):
         try:
-            data = session.query(PlayerEntity).filter(PlayerEntity.id == id)
+            data = (
+                session.query(PlayerEntity)
+                .filter(PlayerEntity.id == id)
+                .first()
+            )
             return data
         except Exception as exc:
             return exc
