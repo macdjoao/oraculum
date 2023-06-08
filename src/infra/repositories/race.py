@@ -14,7 +14,7 @@ class Race:
 
     def insert(self, name: str):
         try:
-            data_insert = RaceEntity(name=name)
+            data_insert = RaceEntity(name=name.capitalize())
             session.add(data_insert)
             session.commit()
             return data_insert
@@ -25,9 +25,11 @@ class Race:
 
     def delete(self, name: str):
         try:
-            session.query(RaceEntity).filter(RaceEntity.name == name).delete()
+            session.query(RaceEntity).filter(
+                RaceEntity.name == name.capitalize()
+            ).delete()
             session.commit()
-            return f'Race deleted: {name}'
+            return f'Race deleted: {name.capitalize()}'
         except Exception as exc:
             return exc
         finally:
@@ -36,10 +38,10 @@ class Race:
     def update(self, actual_name: str, new_name: str):
         try:
             session.query(RaceEntity).filter(
-                RaceEntity.name == actual_name
-            ).update({'name': new_name})
+                RaceEntity.name == actual_name.capitalize()
+            ).update({'name': new_name.capitalize()})
             session.commit()
-            return f'Race updated: {new_name}'
+            return f'Race updated: {new_name.capitalize()}'
         except Exception as exc:
             return exc
         finally:

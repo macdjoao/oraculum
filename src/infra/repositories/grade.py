@@ -14,7 +14,7 @@ class Grade:
 
     def insert(self, name: str):
         try:
-            data_insert = GradeEntity(name=name)
+            data_insert = GradeEntity(name=name.capitalize())
             session.add(data_insert)
             session.commit()
             return data_insert
@@ -26,7 +26,7 @@ class Grade:
     def delete(self, name: str):
         try:
             session.query(GradeEntity).filter(
-                GradeEntity.name == name
+                GradeEntity.name == name.capitalize()
             ).delete()
             session.commit()
             return f'Grade deleted: {name}'
@@ -38,10 +38,10 @@ class Grade:
     def update(self, actual_name: str, new_name: str):
         try:
             session.query(GradeEntity).filter(
-                GradeEntity.name == actual_name
-            ).update({'name': new_name})
+                GradeEntity.name == actual_name.capitalize()
+            ).update({'name': new_name.capitalize()})
             session.commit()
-            return f'Grade updated: {new_name}'
+            return f'Grade updated: {new_name.capitalize()}'
         except Exception as exc:
             return exc
         finally:
