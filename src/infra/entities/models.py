@@ -7,31 +7,28 @@ Base = declarative_base()
 class Player(Base):
     __tablename__ = 'players'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String, nullable=False)
+    name = Column(String, primary_key=True)
     level = Column(Integer, default=1)
-    race = Column(Integer, ForeignKey('races.id'))
-    grade = Column(Integer, ForeignKey('grades.id'))
+    race = Column(String, ForeignKey('races.name'))
+    grade = Column(String, ForeignKey('grades.name'))
 
     def __repr__(self):
-        return f'Player (id = {self.id}, name = {self.name}, level = {self.level}, race = {self.race}, grade = {self.grade})'
+        return f'Player (name = {self.name}, level = {self.level}, race = {self.race}, grade = {self.grade})'
 
 
 class Race(Base):
     __tablename__ = 'races'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String, nullable=False)
+    name = Column(String, primary_key=True)
 
     def __repr__(self):
-        return f'Race (id = {self.id}, name = {self.name})'
+        return f'Race (name = {self.name})'
 
 
 class Grade(Base):
     __tablename__ = 'grades'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String, nullable=False)
+    name = Column(String, primary_key=True)
 
     def __repr__(self):
-        return f'Grade (id = {self.id}, name = {self.name})'
+        return f'Grade (name = {self.name})'
