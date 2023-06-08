@@ -1,5 +1,7 @@
 from src.infra.configs.session import session
-from src.infra.entities.models import Player
+from src.infra.repositories.player import Player as PlayerRepository
+
+# from src.infra.entities.models import Player as PlayerEntity
 
 # Insert procedure
 # data_insert = Player(name='Doe')
@@ -12,12 +14,15 @@ from src.infra.entities.models import Player
 # session.query(Player).filter(Player.name == 'Doe').update({'level': 2})
 
 # After every procedure
-session.commit()
+# session.commit()
 
 
 # Select
-data = session.query(Player).all()
-print(data)
+# data = session.query(PlayerEntity).all()
+# print(data)
 
 # After all
-session.close()
+# session.close()
+
+data = PlayerRepository()
+print(data.select())
