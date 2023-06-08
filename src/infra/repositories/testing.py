@@ -1,33 +1,25 @@
-from src.infra.configs.session import session
-from src.infra.repositories.player import Player as PlayerRepository
+# from src.infra.repositories.player import Player as PlayerRepository
+# from src.infra.repositories.race import Race as RaceRepository
+# from src.infra.repositories.grade import Grade as GradeRepository
 
-# from src.infra.entities.models import Player as PlayerEntity
-
-# Insert procedure
-# data_insert = Player(name='Doe')
-# session.add(data_insert)
-
-# Delete procedure
-# session.query(Player).filter(Player.name == 'John').delete()
-
-# Update procedure
-# session.query(Player).filter(Player.name == 'Doe').update({'level': 2})
-
-# After every procedure
-# session.commit()
-
-
-# Select
-# data = session.query(PlayerEntity).all()
-# print(data)
-
-# After all
-# session.close()
-
-
-data = PlayerRepository()
-# data.insert('Cohle')
-# data.insert('Grimmes')
+# data = PlayerRepository()
+# data.insert(name='Simpson', race_id=1, grade_id=1)
+# data.insert(name='Cohle', race_id=2, grade_id=1)
+# data.insert(name='Shelby', race_id=3, grade_id=1)
 # data.update(name='Soprano', level=2)
-# data.delete('Shelby')
-print(data.select())
+# data.delete(name='Shelby')
+# print(data.select())
+
+# data = RaceRepository()
+# data.insert(name='Human')
+# data.insert(name='Orc')
+# data.update(id=2, name='Dwarf')
+# data.delete(id=5)
+# print(data.select())
+
+# data = GradeRepository()
+# data.insert(name='Warrior')
+# data.insert(name='Archer')
+# data.update(id=1, name='Mage')
+# data.delete(id=2)
+# print(data.select())
