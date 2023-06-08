@@ -1,14 +1,15 @@
-# from src.infra.repositories.player import Player as PlayerRepository
+from src.infra.repositories.player import Player as PlayerRepository
+
 # from src.infra.repositories.race import Race as RaceRepository
 # from src.infra.repositories.grade import Grade as GradeRepository
 
-# data = PlayerRepository()
+data = PlayerRepository()
 # data.insert(name='Simpson', race_id=1, grade_id=1)
 # data.insert(name='Cohle', race_id=2, grade_id=1)
 # data.insert(name='Shelby', race_id=3, grade_id=1)
-# data.update(name='Soprano', level=2)
-# data.delete(name='Shelby')
-# print(data.select())
+# data.update(id=1, level=2)
+# data.delete(id=2)
+# print(data.select_all())
 
 # data = RaceRepository()
 # data.insert(name='Human')

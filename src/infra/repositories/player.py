@@ -3,9 +3,18 @@ from src.infra.entities.models import Player as PlayerEntity
 
 
 class Player:
-    def select(self):
+    def select_all(self):
         try:
             data = session.query(PlayerEntity).all()
+            return data
+        except Exception as exc:
+            return exc
+        finally:
+            session.close()
+
+    def select_one(self, id):
+        try:
+            data = session.query(PlayerEntity).filter(PlayerEntity.id == id)
             return data
         except Exception as exc:
             return exc
