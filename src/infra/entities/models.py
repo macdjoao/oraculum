@@ -14,7 +14,7 @@ class Player(Base):
     grade = Column(Integer, ForeignKey('grades.id'))
 
     def __repr__(self):
-        return f'Players (id = {self.id}, name = {self.name}, level = {self.level})'
+        return f'Player (id = {self.id}, name = {self.name}, level = {self.level}, race = {self.race}, grade = {self.grade})'
 
 
 class Race(Base):
@@ -24,7 +24,7 @@ class Race(Base):
     name = Column(String, nullable=False)
 
     def __repr__(self):
-        return f'Races (id = {self.id}, name = {self.name})'
+        return f'Race (id = {self.id}, name = {self.name})'
 
 
 class Grade(Base):
@@ -34,4 +34,4 @@ class Grade(Base):
     name = Column(String, nullable=False)
 
     def __repr__(self):
-        return f'Grades (id = {self.id}, name = {self.name})'
+        return f'Grade (id = {self.id}, name = {self.name})'
