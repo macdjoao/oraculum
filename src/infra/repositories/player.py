@@ -52,11 +52,35 @@ class Player:
         finally:
             session.close()
 
-    def update(self, name: str, level: int):
+    def update_level(self, name: str, level: int):
         try:
             session.query(PlayerEntity).filter(
                 PlayerEntity.name == name.capitalize()
             ).update({'level': level})
+            session.commit()
+            return f'Player updated: {name.capitalize()}'
+        except Exception as exc:
+            return exc
+        finally:
+            session.close()
+
+    def update_race(self, name: str, race: str):
+        try:
+            session.query(PlayerEntity).filter(
+                PlayerEntity.name == name.capitalize()
+            ).update({'race': race.capitalize()})
+            session.commit()
+            return f'Player updated: {name.capitalize()}'
+        except Exception as exc:
+            return exc
+        finally:
+            session.close()
+
+    def update_grade(self, name: str, grade: str):
+        try:
+            session.query(PlayerEntity).filter(
+                PlayerEntity.name == name.capitalize()
+            ).update({'grade': grade.capitalize()})
             session.commit()
             return f'Player updated: {name.capitalize()}'
         except Exception as exc:
