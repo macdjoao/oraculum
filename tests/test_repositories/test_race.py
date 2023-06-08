@@ -17,3 +17,22 @@ def test_insert_race():
 
     # Cleaning DB
     race.delete(name=name)
+
+
+def test_update_race():
+
+    actual_name = (fake.word()).capitalize()
+    new_name = (fake.word()).capitalize()
+
+    race.insert(name=actual_name)
+
+    update_response = str(
+        race.update(actual_name=actual_name, new_name=new_name)
+    )
+    select_response = str(race.select_one(name=new_name))
+
+    assert update_response == f'Race updated: {new_name}'
+    assert select_response == f'Race (name = {new_name})'
+
+    # Cleaning DB
+    race.delete(name=new_name)
