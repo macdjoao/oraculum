@@ -12,7 +12,7 @@ class Race:
         finally:
             session.close()
 
-    def insert(self, name):
+    def insert(self, name: str):
         try:
             data_insert = RaceEntity(name=name)
             session.add(data_insert)
@@ -23,7 +23,7 @@ class Race:
         finally:
             session.close()
 
-    def delete(self, name):
+    def delete(self, name: str):
         try:
             session.query(RaceEntity).filter(RaceEntity.name == name).delete()
             session.commit()
@@ -33,13 +33,13 @@ class Race:
         finally:
             session.close()
 
-    def update(self, actual_name, new_name):
+    def update(self, actual_name: str, new_name: str):
         try:
             session.query(RaceEntity).filter(
                 RaceEntity.name == actual_name
             ).update({'name': new_name})
             session.commit()
-            return f'Race updated: {id}'
+            return f'Race updated: {new_name}'
         except Exception as exc:
             return exc
         finally:

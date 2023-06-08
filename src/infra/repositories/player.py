@@ -12,7 +12,7 @@ class Player:
         finally:
             session.close()
 
-    def select_one(self, name):
+    def select_one(self, name: str):
         try:
             data = (
                 session.query(PlayerEntity)
@@ -25,7 +25,7 @@ class Player:
         finally:
             session.close()
 
-    def insert(self, name, race, grade):
+    def insert(self, name: str, race: str, grade: str):
         try:
             data_insert = PlayerEntity(name=name, race=race, grade=grade)
             session.add(data_insert)
@@ -36,7 +36,7 @@ class Player:
         finally:
             session.close()
 
-    def delete(self, name):
+    def delete(self, name: str):
         try:
             session.query(PlayerEntity).filter(
                 PlayerEntity.name == name
@@ -48,7 +48,7 @@ class Player:
         finally:
             session.close()
 
-    def update(self, name, level):
+    def update(self, name: str, level: int):
         try:
             session.query(PlayerEntity).filter(
                 PlayerEntity.name == name
