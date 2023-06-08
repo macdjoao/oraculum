@@ -15,15 +15,8 @@ def test_insert_grade():
 
     assert response == f'Grade (name = {name})'
 
-
-def test_delete_grade():
-
-    name = (fake.word()).capitalize()
-
-    grade.insert(name=name)
-    response = str(grade.delete(name=name))
-
-    assert response == f'Grade deleted: {name}'
+    # Cleaning DB
+    grade.delete(name=name)
 
 
 def test_update_grade():
@@ -40,3 +33,16 @@ def test_update_grade():
 
     assert update_response == f'Grade updated: {new_name}'
     assert select_response == f'Grade (name = {new_name})'
+
+    # Cleaning DB
+    grade.delete(name=new_name)
+
+
+def test_delete_grade():
+
+    name = (fake.word()).capitalize()
+
+    grade.insert(name=name)
+    response = str(grade.delete(name=name))
+
+    assert response == f'Grade deleted: {name}'
