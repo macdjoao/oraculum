@@ -23,21 +23,21 @@ class Race:
         finally:
             session.close()
 
-    def delete(self, id):
+    def delete(self, name):
         try:
-            session.query(RaceEntity).filter(RaceEntity.id == id).delete()
+            session.query(RaceEntity).filter(RaceEntity.name == name).delete()
             session.commit()
-            return f'Race deleted: {id}'
+            return f'Race deleted: {name}'
         except Exception as exc:
             return exc
         finally:
             session.close()
 
-    def update(self, id, name):
+    def update(self, actual_name, new_name):
         try:
-            session.query(RaceEntity).filter(RaceEntity.id == id).update(
-                {'name': name}
-            )
+            session.query(RaceEntity).filter(
+                RaceEntity.name == actual_name
+            ).update({'name': new_name})
             session.commit()
             return f'Race updated: {id}'
         except Exception as exc:
