@@ -36,3 +36,13 @@ def test_update_race():
 
     # Cleaning DB
     race.delete(name=new_name)
+
+
+def test_delete_race():
+
+    name = (fake.word()).capitalize()
+
+    race.insert(name=name)
+    response = str(race.delete(name=name))
+
+    assert response == f'Race deleted: {name}'
