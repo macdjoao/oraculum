@@ -1,9 +1,11 @@
 from src.infra.configs.session import session
 from src.infra.entities.models import Player as PlayerEntity
+from src.infra.entities.models import Race as RaceEntity
 from src.infra.repositories.errors.player import (PlayerAlreadyRegisteredError,
                                                   PlayerIncompleteParamsError,
                                                   PlayerNoRecordError,
                                                   PlayerNotFoundError)
+from src.infra.repositories.errors.race import RaceNotFoundError
 
 
 class Player:
@@ -51,6 +53,14 @@ class Player:
             if grade == None:
                 raise PlayerIncompleteParamsError(missing_param='grade')
 
+            race_not_found = (
+                session.query(RaceEntity)
+                .filter(RaceEntity.name == race.capitalize())
+                .first()
+            )
+            if race_not_found == None:
+                raise RaceNotFoundError(race=race.capitalize())
+
             data_already_registered = (
                 session.query(PlayerEntity)
                 .filter(PlayerEntity.name == name.capitalize())
@@ -72,6 +82,9 @@ class Player:
             session.rollback()
             return err.message
         except PlayerAlreadyRegisteredError as err:
+            session.rollback()
+            return err.message
+        except RaceNotFoundError as err:
             session.rollback()
             return err.message
         finally:
