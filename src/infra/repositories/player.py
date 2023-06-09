@@ -103,16 +103,29 @@ class Player:
         finally:
             session.close()
 
-    def delete(self, name: str):
+    def delete(self, name: str = None):
         try:
+            if name == None:
+                raise PlayerIncompleteParamsError(missing_param='name')
+
+            data = (
+                session.query(PlayerEntity)
+                .filter(PlayerEntity.name == name.capitalize())
+                .first()
+            )
+            if data == None:
+                raise PlayerNotFoundError(player=name.capitalize())
+
             session.query(PlayerEntity).filter(
                 PlayerEntity.name == name.capitalize()
             ).delete()
             session.commit()
             return f'Player deleted: {name.capitalize()}'
-        except Exception as exc:
+        except PlayerIncompleteParamsError as err:
             session.rollback()
-            return exc
+            return err.message
+        except PlayerNotFoundError as err:
+            return err.message
         finally:
             session.close()
 
