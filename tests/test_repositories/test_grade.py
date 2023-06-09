@@ -71,6 +71,26 @@ def test_grade_select_one_incomplete_param_error_name():
     assert response == f'Error: Missing param "name" in Grade'
 
 
+def test_grade_insert_incomplete_param_error_name():
+
+    response = str(grade.insert())
+
+    assert response == f'Error: Missing param "name" in Grade'
+
+
+def test_grade_insert_already_registered_error_name():
+
+    already_grade_name = fake.first_name()
+    grade.insert(name=already_grade_name)
+
+    response = str(grade.insert(name=already_grade_name))
+
+    # Cleaning DB
+    grade.delete(name=already_grade_name)
+
+    assert response == f'Error: Grade {already_grade_name} already registered'
+
+
 def test_grade_update_incomplete_param_error_actual_name():
 
     response = str(grade.update_name())
