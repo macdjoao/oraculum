@@ -90,3 +90,12 @@ def test_race_update_incomplete_param_error_actual_name():
     response = str(race.update_name())
 
     assert response == f'Error: Missing param "actual_name" in Race'
+
+
+def test_race_update_incomplete_param_error_new_name():
+
+    actual_name = fake.first_name()
+
+    response = str(race.update_name(actual_name=actual_name))
+
+    assert response == f'Error: Missing param "new_name" in Race'
