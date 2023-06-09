@@ -38,12 +38,21 @@ def test_player_insert():
 
 def test_player_delete():
 
-    player_name = (fake.first_name()).capitalize()
     race_name = (fake.word()).capitalize()
-    grade_name = (fake.word()).capitalize()
+    race.insert(name=race_name)
 
+    grade_name = (fake.word()).capitalize()
+    grade.insert(name=grade_name)
+
+    player_name = (fake.first_name()).capitalize()
     player.insert(name=player_name, race=race_name, grade=grade_name)
+
     response = str(player.delete(name=player_name))
+
+    # Cleaning DB
+    player.delete(name=player_name)
+    race.delete(name=race_name)
+    grade.delete(name=grade_name)
 
     assert response == f'Player deleted: {player_name}'
 
@@ -185,3 +194,55 @@ def test_player_select_one_incomplete_param_error_name():
     response = str(player.select_one())
 
     assert response == f'Error: Missing param "name" in Player'
+
+
+def test_player_insert_incomplete_param_error_name():
+
+    race = fake.word()
+    grade = fake.word()
+
+    response = str(player.insert(race=race, grade=grade))
+
+    assert response == f'Error: Missing param "name" in Player'
+
+
+def test_player_insert_incomplete_param_error_race():
+
+    name = (fake.word()).capitalize()
+    grade = fake.word()
+
+    response = str(player.insert(name=name, grade=grade))
+
+    assert response == f'Error: Missing param "race" in Player'
+
+
+def test_player_insert_incomplete_param_error_grade():
+
+    name = (fake.word()).capitalize()
+    race = (fake.word()).capitalize()
+
+    response = str(player.insert(name=name, race=race))
+
+    assert response == f'Error: Missing param "grade" in Player'
+
+
+# def test_player_insert_already_registered_error_name():
+
+#     race_name = (fake.word()).capitalize()
+#     race.insert(name=race_name)
+
+#     grade_name = (fake.word()).capitalize()
+#     grade.insert(name=grade_name)
+
+#     already_player_name = fake.first_name()
+#     player.insert(name=already_player_name)
+
+#     response = str(player.insert(name=already_player_name,
+#                    race=race_name, grade=grade_name))
+
+#     # Cleaning DB
+#     player.delete(name=already_player_name)
+#     race.delete(name=race_name)
+#     grade.delete(name=grade_name)
+
+#     assert response == f'Error: Player {already_player_name} already registered'
