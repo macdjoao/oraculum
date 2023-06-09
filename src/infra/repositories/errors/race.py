@@ -1,7 +1,3 @@
-# insert (race ja cadastrado)
-# update (race ja cadastrada)
-
-
 class RaceNoRecordError(Exception):
     def __init__(self) -> None:
         super().__init__()
