@@ -62,3 +62,10 @@ def test_race_select_one_not_found_error():
     response = str(race.select_one(name=name))
 
     assert response == f'Error: Race {name} not found'
+
+
+def test_race_select_one_incomplete_param_error_name():
+
+    response = str(race.select_one())
+
+    assert response == f'Error: Missing param "name" in Race'
