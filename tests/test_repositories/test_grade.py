@@ -53,3 +53,19 @@ def test_grade_select_all_no_record_error():
     response = str(grade.select_all())
 
     assert response == 'Error: No Grade record found'
+
+
+def test_grade_select_one_not_found_error():
+
+    name = (fake.word()).capitalize()
+
+    response = str(grade.select_one(name=name))
+
+    assert response == f'Error: Grade {name} not found'
+
+
+def test_grade_select_one_incomplete_param_error_name():
+
+    response = str(grade.select_one())
+
+    assert response == f'Error: Missing param "name" in Grade'
