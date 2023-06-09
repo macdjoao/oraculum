@@ -1,6 +1,8 @@
 from src.infra.configs.session import session
 from src.infra.entities.models import Grade as GradeEntity
-from src.infra.repositories.errors.grade import GradeNoRecordError
+from src.infra.repositories.errors.grade import (GradeIncompleteParamsError,
+                                                 GradeNoRecordError,
+                                                 GradeNotFoundError)
 
 
 class Grade:
@@ -17,16 +19,25 @@ class Grade:
         finally:
             session.close()
 
-    def select_one(self, name: str):
+    def select_one(self, name: str = None):
         try:
+            if name == None:
+                raise GradeIncompleteParamsError(missing_param='name')
+
             data = (
                 session.query(GradeEntity)
                 .filter(GradeEntity.name == name.capitalize())
                 .first()
             )
+            if data == None:
+                raise GradeNotFoundError(grade=name.capitalize())
+
             return data
-        except Exception as exc:
-            return exc
+
+        except GradeIncompleteParamsError as err:
+            return err.message
+        except GradeNotFoundError as err:
+            return err.message
         finally:
             session.close()
 
