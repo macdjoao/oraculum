@@ -19,19 +19,6 @@ def test_insert_race():
     assert response == f'Race (name = {name})'
 
 
-def test_race_insert_already_registered_error_name():
-
-    already_race_sample = fake.first_name()
-    race.insert(name=already_race_sample)
-
-    response = str(race.insert(name=already_race_sample))
-
-    # Cleaning DB
-    race.delete(name=already_race_sample)
-
-    assert response == f'Error: Race {already_race_sample} already registered'
-
-
 def test_update_race_name():
 
     actual_name = (fake.word()).capitalize()
@@ -89,6 +76,19 @@ def test_race_insert_incomplete_param_error_name():
     response = str(race.insert())
 
     assert response == f'Error: Missing param "name" in Race'
+
+
+def test_race_insert_already_registered_error_name():
+
+    already_race_name = fake.first_name()
+    race.insert(name=already_race_name)
+
+    response = str(race.insert(name=already_race_name))
+
+    # Cleaning DB
+    race.delete(name=already_race_name)
+
+    assert response == f'Error: Race {already_race_name} already registered'
 
 
 def test_race_delete_incomplete_param_error_name():
