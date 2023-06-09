@@ -267,3 +267,26 @@ def test_player_insert_race_not_found_error():
     grade.delete(name=grade_name)
 
     assert response == f'Error: Race {race_name} not found'
+
+
+def test_player_insert_grade_not_found_error():
+
+    grade_name = (fake.word()).capitalize()
+
+    race_name = (fake.word()).capitalize()
+    race.insert(name=race_name)
+
+    already_player_name = fake.first_name()
+    player.insert(name=already_player_name, race=race_name, grade=grade_name)
+
+    response = str(
+        player.insert(
+            name=already_player_name, race=race_name, grade=grade_name
+        )
+    )
+
+    # Cleaning DB
+    player.delete(name=already_player_name)
+    race.delete(name=race_name)
+
+    assert response == f'Error: Grade {grade_name} not found'
