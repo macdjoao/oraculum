@@ -1,14 +1,17 @@
 from src.infra.configs.session import session
 from src.infra.entities.models import Race as RaceEntity
+from src.infra.repositories.errors.race import RaceSelectAllError
 
 
 class Race:
     def select_all(self):
         try:
             data = session.query(RaceEntity).all()
+            if data == []:
+                raise RaceSelectAllError
             return data
-        except Exception as exc:
-            return exc
+        except RaceSelectAllError as err:
+            return err.message
         finally:
             session.close()
 
