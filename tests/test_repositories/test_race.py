@@ -76,3 +76,10 @@ def test_race_insert_incomplete_param_error_name():
     response = str(race.insert())
 
     assert response == f'Error: Missing param "name" in Race'
+
+
+def test_race_delete_incomplete_param_error_name():
+
+    response = str(race.delete())
+
+    assert response == f'Error: Missing param "name" in Race'
