@@ -73,6 +73,14 @@ class Race:
             if name == None:
                 raise RaceIncompleteParamsError(missing_param='name')
 
+            data = (
+                session.query(RaceEntity)
+                .filter(RaceEntity.name == name.capitalize())
+                .first()
+            )
+            if data == None:
+                raise RaceNotFoundError(race=name.capitalize())
+
             session.query(RaceEntity).filter(
                 RaceEntity.name == name.capitalize()
             ).delete()
@@ -81,6 +89,8 @@ class Race:
 
         except RaceIncompleteParamsError as err:
             session.rollback()
+            return err.message
+        except RaceNotFoundError as err:
             return err.message
         finally:
             session.close()
