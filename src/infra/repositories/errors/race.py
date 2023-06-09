@@ -18,3 +18,11 @@ class RaceNotFoundError(Exception):
         self.race = race
         self.message = f'Error: Race {self.race} not found'
         self.type = 'ErrorType: Repositories/Race/RaceNotFoundError'
+
+
+class RaceIncompleteParamsError(Exception):
+    def __init__(self, missing_param: str) -> None:
+        super().__init__()
+        self.missing_param = missing_param
+        self.message = f'Error: Missing param "{self.missing_param}" in Race'
+        self.type = 'ErrorType: Repositories/Race/RaceIncompleteParamsError'
