@@ -25,16 +25,15 @@ def test_insert_player():
 
     response = str(player.select_one(name=player_name))
 
+    # Cleaning DB
+    player.delete(name=player_name)
+    race.delete(name=race_name)
+    grade.delete(name=grade_name)
+
     assert (
         response
         == f'Player (name = {player_name}, level = 1, race = {race_name}, grade = {grade_name})'
     )
-
-    # Cleaning DB
-    race.delete(name=race_name)
-    grade.delete(name=grade_name)
-
-    player.delete(name=player_name)
 
 
 def test_update_player_name():
@@ -56,17 +55,16 @@ def test_update_player_name():
     )
     select_response = str(player.select_one(name=new_player_name))
 
+    # Cleaning DB
+    player.delete(name=new_player_name)
+    race.delete(name=race_name)
+    grade.delete(name=grade_name)
+
     assert update_response == f'Player updated: {new_player_name}'
     assert (
         select_response
         == f'Player (name = {new_player_name}, level = 1, race = {race_name}, grade = {grade_name})'
     )
-
-    # Cleaning DB
-    race.delete(name=race_name)
-    grade.delete(name=grade_name)
-
-    player.delete(name=new_player_name)
 
 
 def test_update_player_level():
@@ -85,15 +83,15 @@ def test_update_player_level():
 
     response = str(player.select_one(name=player_name))
 
-    assert (
-        response
-        == f'Player (name = {player_name}, level = {new_level}, race = {race_name}, grade = {grade_name})'
-    )
-
     # Cleaning DB
     player.delete(name=player_name)
     race.delete(name=race_name)
     grade.delete(name=grade_name)
+
+    assert (
+        response
+        == f'Player (name = {player_name}, level = {new_level}, race = {race_name}, grade = {grade_name})'
+    )
 
 
 def test_update_player_race():
@@ -113,16 +111,16 @@ def test_update_player_race():
 
     response = str(player.select_one(name=player_name))
 
+    # Cleaning DB
+    player.delete(name=player_name)
+    grade.delete(name=grade_name)
+    race.delete(name=race_name)
+    race.delete(name=new_race)
+
     assert (
         response
         == f'Player (name = {player_name}, level = 1, race = {new_race}, grade = {grade_name})'
     )
-
-    # Cleaning DB
-    player.delete(name=player_name)
-    grade.delete(name=grade_name)
-
-    race.delete(name=new_race)
 
 
 def test_update_player_grade():
@@ -142,13 +140,13 @@ def test_update_player_grade():
 
     response = str(player.select_one(name=player_name))
 
+    # Cleaning DB
+    player.delete(name=player_name)
+    race.delete(name=race_name)
+    grade.delete(name=grade_name)
+    grade.delete(name=new_grade)
+
     assert (
         response
         == f'Player (name = {player_name}, level = 1, race = {race_name}, grade = {new_grade})'
     )
-
-    # Cleaning DB
-    player.delete(name=player_name)
-    race.delete(name=race_name)
-
-    grade.delete(name=new_grade)

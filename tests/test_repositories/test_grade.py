@@ -13,10 +13,10 @@ def test_insert_grade():
     grade.insert(name=name)
     response = str(grade.select_one(name=name))
 
-    assert response == f'Grade (name = {name})'
-
     # Cleaning DB
     grade.delete(name=name)
+
+    assert response == f'Grade (name = {name})'
 
 
 def test_update_grade_name():
@@ -31,11 +31,11 @@ def test_update_grade_name():
     )
     select_response = str(grade.select_one(name=new_name))
 
-    assert update_response == f'Grade updated: {new_name}'
-    assert select_response == f'Grade (name = {new_name})'
-
     # Cleaning DB
     grade.delete(name=new_name)
+
+    assert update_response == f'Grade updated: {new_name}'
+    assert select_response == f'Grade (name = {new_name})'
 
 
 def test_delete_grade():

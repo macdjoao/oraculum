@@ -13,10 +13,10 @@ def test_insert_race():
     race.insert(name=name)
     response = str(race.select_one(name=name))
 
-    assert response == f'Race (name = {name})'
-
     # Cleaning DB
     race.delete(name=name)
+
+    assert response == f'Race (name = {name})'
 
 
 def test_update_race_name():
@@ -31,11 +31,11 @@ def test_update_race_name():
     )
     select_response = str(race.select_one(name=new_name))
 
-    assert update_response == f'Race updated: {new_name}'
-    assert select_response == f'Race (name = {new_name})'
-
     # Cleaning DB
     race.delete(name=new_name)
+
+    assert update_response == f'Race updated: {new_name}'
+    assert select_response == f'Race (name = {new_name})'
 
 
 def test_delete_race():
