@@ -73,6 +73,14 @@ class Grade:
             if name == None:
                 raise GradeIncompleteParamsError(missing_param='name')
 
+            data = (
+                session.query(GradeEntity)
+                .filter(GradeEntity.name == name.capitalize())
+                .first()
+            )
+            if data == None:
+                raise GradeNotFoundError(grade=name.capitalize())
+
             session.query(GradeEntity).filter(
                 GradeEntity.name == name.capitalize()
             ).delete()
@@ -81,6 +89,8 @@ class Grade:
 
         except GradeIncompleteParamsError as err:
             session.rollback()
+            return err.message
+        except GradeNotFoundError as err:
             return err.message
         finally:
             session.close()
