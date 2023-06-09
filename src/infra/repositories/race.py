@@ -41,13 +41,27 @@ class Race:
         try:
             if name == None:
                 raise RaceIncompleteParamsError(missing_param='name')
+
+            data_already_registered = (
+                session.query(RaceEntity)
+                .filter(RaceEntity.name == name.capitalize())
+                .first()
+            )
+            if not data_already_registered == None:
+                raise RaceAlreadyRegisteredError(race=name.capitalize())
+
             data_insert = RaceEntity(name=name.capitalize())
             session.add(data_insert)
             session.commit()
             return data_insert
+
         except RaceIncompleteParamsError as err:
             session.rollback()
             return err.message
+
+        except RaceAlreadyRegisteredError as err:
+            return err.message
+
         finally:
             session.close()
 
