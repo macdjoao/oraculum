@@ -54,6 +54,19 @@ class Player:
         finally:
             session.close()
 
+    def update_name(self, actual_name: str, new_name: str):
+        try:
+            session.query(PlayerEntity).filter(
+                PlayerEntity.name == actual_name.capitalize()
+            ).update({'name': new_name.capitalize()})
+            session.commit()
+            return f'Player updated: {new_name.capitalize()}'
+        except Exception as exc:
+            session.rollback()
+            return exc
+        finally:
+            session.close()
+
     def update_level(self, name: str, level: int):
         try:
             session.query(PlayerEntity).filter(
