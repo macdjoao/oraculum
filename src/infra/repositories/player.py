@@ -1,6 +1,8 @@
 from src.infra.configs.session import session
 from src.infra.entities.models import Player as PlayerEntity
-from src.infra.repositories.errors.player import PlayerNoRecordError
+from src.infra.repositories.errors.player import (PlayerIncompleteParamsError,
+                                                  PlayerNoRecordError,
+                                                  PlayerNotFoundError)
 
 
 class Player:
@@ -17,16 +19,25 @@ class Player:
         finally:
             session.close()
 
-    def select_one(self, name: str):
+    def select_one(self, name: str = None):
         try:
+            if name == None:
+                raise PlayerIncompleteParamsError(missing_param='name')
+
             data = (
                 session.query(PlayerEntity)
                 .filter(PlayerEntity.name == name.capitalize())
                 .first()
             )
+            if data == None:
+                raise PlayerNotFoundError(player=name.capitalize())
+
             return data
-        except Exception as exc:
-            return exc
+
+        except PlayerIncompleteParamsError as err:
+            return err.message
+        except PlayerNotFoundError as err:
+            return err.message
         finally:
             session.close()
 
