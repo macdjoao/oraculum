@@ -1,14 +1,19 @@
 from src.infra.configs.session import session
 from src.infra.entities.models import Player as PlayerEntity
+from src.infra.repositories.errors.player import PlayerNoRecordError
 
 
 class Player:
     def select_all(self):
         try:
             data = session.query(PlayerEntity).all()
+            if data == []:
+                raise PlayerNoRecordError
+
             return data
-        except Exception as exc:
-            return exc
+
+        except PlayerNoRecordError as err:
+            return err.message
         finally:
             session.close()
 
