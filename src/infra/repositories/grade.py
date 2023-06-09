@@ -50,7 +50,7 @@ class Grade:
         finally:
             session.close()
 
-    def update(self, actual_name: str, new_name: str):
+    def update_name(self, actual_name: str, new_name: str):
         try:
             session.query(GradeEntity).filter(
                 GradeEntity.name == actual_name.capitalize()

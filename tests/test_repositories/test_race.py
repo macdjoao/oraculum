@@ -19,7 +19,7 @@ def test_insert_race():
     race.delete(name=name)
 
 
-def test_update_race():
+def test_update_race_name():
 
     actual_name = (fake.word()).capitalize()
     new_name = (fake.word()).capitalize()
@@ -27,7 +27,7 @@ def test_update_race():
     race.insert(name=actual_name)
 
     update_response = str(
-        race.update(actual_name=actual_name, new_name=new_name)
+        race.update_name(actual_name=actual_name, new_name=new_name)
     )
     select_response = str(race.select_one(name=new_name))
 

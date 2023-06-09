@@ -19,7 +19,7 @@ def test_insert_grade():
     grade.delete(name=name)
 
 
-def test_update_grade():
+def test_update_grade_name():
 
     actual_name = (fake.word()).capitalize()
     new_name = (fake.word()).capitalize()
@@ -27,7 +27,7 @@ def test_update_grade():
     grade.insert(name=actual_name)
 
     update_response = str(
-        grade.update(actual_name=actual_name, new_name=new_name)
+        grade.update_name(actual_name=actual_name, new_name=new_name)
     )
     select_response = str(grade.select_one(name=new_name))
 
