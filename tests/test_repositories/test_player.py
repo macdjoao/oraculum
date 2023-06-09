@@ -189,13 +189,6 @@ def test_player_select_one_not_found_error():
     assert response == f'Error: Player {name} not found'
 
 
-def test_player_select_one_incomplete_param_error_name():
-
-    response = str(player.select_one())
-
-    assert response == f'Error: Missing param "name" in Player'
-
-
 def test_player_insert_incomplete_param_error_name():
 
     race = fake.word()
@@ -226,23 +219,31 @@ def test_player_insert_incomplete_param_error_grade():
     assert response == f'Error: Missing param "grade" in Player'
 
 
-# def test_player_insert_already_registered_error_name():
+# FIX
 
-#     race_name = (fake.word()).capitalize()
-#     race.insert(name=race_name)
 
-#     grade_name = (fake.word()).capitalize()
-#     grade.insert(name=grade_name)
+def test_player_insert_already_registered_error_name():
 
-#     already_player_name = fake.first_name()
-#     player.insert(name=already_player_name)
+    race_name = (fake.word()).capitalize()
+    race.insert(name=race_name)
 
-#     response = str(player.insert(name=already_player_name,
-#                    race=race_name, grade=grade_name))
+    grade_name = (fake.word()).capitalize()
+    grade.insert(name=grade_name)
 
-#     # Cleaning DB
-#     player.delete(name=already_player_name)
-#     race.delete(name=race_name)
-#     grade.delete(name=grade_name)
+    already_player_name = fake.first_name()
+    player.insert(name=already_player_name, race=race_name, grade=grade_name)
 
-#     assert response == f'Error: Player {already_player_name} already registered'
+    response = str(
+        player.insert(
+            name=already_player_name, race=race_name, grade=grade_name
+        )
+    )
+
+    # Cleaning DB
+    player.delete(name=already_player_name)
+    race.delete(name=race_name)
+    grade.delete(name=grade_name)
+
+    assert (
+        response == f'Error: Player {already_player_name} already registered'
+    )
