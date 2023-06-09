@@ -53,3 +53,12 @@ def test_race_select_all_error():
     response = str(race.select_all())
 
     assert response == 'Error: No Race record found'
+
+
+def test_race_select_select_one():
+
+    name = (fake.word()).capitalize()
+
+    response = str(race.select_one(name=name))
+
+    assert response == f'Error: Race {name} not found'
