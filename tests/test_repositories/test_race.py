@@ -46,3 +46,10 @@ def test_delete_race():
     response = str(race.delete(name=name))
 
     assert response == f'Race deleted: {name}'
+
+
+def test_race_select_all_error():
+
+    response = str(race.select_all())
+
+    assert response == 'Error: No Race record found'
