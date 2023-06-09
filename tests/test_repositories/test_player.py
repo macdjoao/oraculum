@@ -219,9 +219,6 @@ def test_player_insert_incomplete_param_error_grade():
     assert response == f'Error: Missing param "grade" in Player'
 
 
-# FIX
-
-
 def test_player_insert_already_registered_error_name():
 
     race_name = (fake.word()).capitalize()
@@ -247,3 +244,26 @@ def test_player_insert_already_registered_error_name():
     assert (
         response == f'Error: Player {already_player_name} already registered'
     )
+
+
+def test_player_insert_race_not_found_error():
+
+    race_name = (fake.word()).capitalize()
+
+    grade_name = (fake.word()).capitalize()
+    grade.insert(name=grade_name)
+
+    already_player_name = fake.first_name()
+    player.insert(name=already_player_name, race=race_name, grade=grade_name)
+
+    response = str(
+        player.insert(
+            name=already_player_name, race=race_name, grade=grade_name
+        )
+    )
+
+    # Cleaning DB
+    player.delete(name=already_player_name)
+    grade.delete(name=grade_name)
+
+    assert response == f'Error: Race {race_name} not found'
