@@ -69,3 +69,54 @@ def test_grade_select_one_incomplete_param_error_name():
     response = str(grade.select_one())
 
     assert response == f'Error: Missing param "name" in Grade'
+
+
+def test_grade_update_incomplete_param_error_actual_name():
+
+    response = str(grade.update_name())
+
+    assert response == f'Error: Missing param "actual_name" in Grade'
+
+
+def test_grade_update_incomplete_param_error_new_name():
+
+    actual_name = fake.first_name()
+
+    response = str(grade.update_name(actual_name=actual_name))
+
+    assert response == f'Error: Missing param "new_name" in Grade'
+
+
+def test_grade_update_not_found_error_actual_name():
+
+    actual_name = fake.first_name()
+    new_name = fake.first_name()
+
+    response = str(
+        grade.update_name(actual_name=actual_name, new_name=new_name)
+    )
+
+    assert response == f'Error: Grade {actual_name} not found'
+
+
+def test_grade_update_already_registered_error_new_name():
+
+    actual_grade_sample = fake.first_name()
+    grade.insert(name=actual_grade_sample)
+
+    already_grade_sample = fake.first_name()
+    grade.insert(name=already_grade_sample)
+
+    response = str(
+        grade.update_name(
+            actual_name=actual_grade_sample, new_name=already_grade_sample
+        )
+    )
+
+    # Cleaning DB
+    grade.delete(name=actual_grade_sample)
+    grade.delete(name=already_grade_sample)
+
+    assert (
+        response == f'Error: Grade {already_grade_sample} already registered'
+    )
