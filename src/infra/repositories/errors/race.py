@@ -5,11 +5,11 @@
 # update (payload incompleto; race nao encontrado; race ja cadastrada)
 
 
-class RaceSelectAllError(Exception):
+class RaceNoRecordError(Exception):
     def __init__(self) -> None:
         super().__init__()
         self.message = 'Error: No Race record found'
-        self.type = 'ErrorType: Repositories/Race/RaceSelectAllError'
+        self.type = 'ErrorType: Repositories/Race/RaceNoRecordError'
 
 
 class RaceNotFoundError(Exception):

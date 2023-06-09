@@ -1,8 +1,8 @@
 from src.infra.configs.session import session
 from src.infra.entities.models import Race as RaceEntity
 from src.infra.repositories.errors.race import (RaceIncompleteParamsError,
-                                                RaceNotFoundError,
-                                                RaceSelectAllError)
+                                                RaceNoRecordError,
+                                                RaceNotFoundError)
 
 
 class Race:
@@ -10,9 +10,9 @@ class Race:
         try:
             data = session.query(RaceEntity).all()
             if data == []:
-                raise RaceSelectAllError
+                raise RaceNoRecordError
             return data
-        except RaceSelectAllError as err:
+        except RaceNoRecordError as err:
             return err.message
         finally:
             session.close()
