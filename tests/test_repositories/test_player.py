@@ -31,12 +31,45 @@ def test_insert_player():
     )
 
     # Cleaning DB
-    player.delete(name=player_name)
     race.delete(name=race_name)
     grade.delete(name=grade_name)
 
+    player.delete(name=player_name)
 
-def test_update_level():
+
+def test_update_player_name():
+
+    race_name = (fake.word()).capitalize()
+    race.insert(name=race_name)
+
+    grade_name = (fake.word()).capitalize()
+    grade.insert(name=grade_name)
+
+    actual_player_name = (fake.first_name()).capitalize()
+    player.insert(name=actual_player_name, race=race_name, grade=grade_name)
+
+    new_player_name = (fake.first_name()).capitalize()
+    update_response = str(
+        player.update_name(
+            actual_name=actual_player_name, new_name=new_player_name
+        )
+    )
+    select_response = str(player.select_one(name=new_player_name))
+
+    assert update_response == f'Player updated: {new_player_name}'
+    assert (
+        select_response
+        == f'Player (name = {new_player_name}, level = 1, race = {race_name}, grade = {grade_name})'
+    )
+
+    # Cleaning DB
+    race.delete(name=race_name)
+    grade.delete(name=grade_name)
+
+    player.delete(name=new_player_name)
+
+
+def test_update_player_level():
 
     race_name = (fake.word()).capitalize()
     race.insert(name=race_name)
@@ -63,7 +96,7 @@ def test_update_level():
     grade.delete(name=grade_name)
 
 
-def test_update_race():
+def test_update_player_race():
 
     race_name = (fake.word()).capitalize()
     race.insert(name=race_name)
@@ -87,13 +120,12 @@ def test_update_race():
 
     # Cleaning DB
     player.delete(name=player_name)
-    race.delete(name=race_name)
     grade.delete(name=grade_name)
 
     race.delete(name=new_race)
 
 
-def test_update_grade():
+def test_update_player_grade():
 
     race_name = (fake.word()).capitalize()
     race.insert(name=race_name)
@@ -118,6 +150,5 @@ def test_update_grade():
     # Cleaning DB
     player.delete(name=player_name)
     race.delete(name=race_name)
-    grade.delete(name=grade_name)
 
     grade.delete(name=new_grade)
