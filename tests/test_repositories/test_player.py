@@ -162,3 +162,10 @@ def test_player_update_grade():
         response
         == f'Player (name = {player_name}, level = 1, race = {race_name}, grade = {new_grade})'
     )
+
+
+def test_player_select_all_no_record_error():
+
+    response = str(player.select_all())
+
+    assert response == 'Error: No Player record found'
