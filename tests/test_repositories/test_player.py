@@ -12,7 +12,7 @@ race = RaceRepository()
 grade = GradeRepository()
 
 
-def test_insert_player():
+def test_player_insert():
 
     race_name = (fake.word()).capitalize()
     race.insert(name=race_name)
@@ -36,7 +36,7 @@ def test_insert_player():
     )
 
 
-def test_update_player_name():
+def test_player_update_name():
 
     race_name = (fake.word()).capitalize()
     race.insert(name=race_name)
@@ -67,7 +67,7 @@ def test_update_player_name():
     )
 
 
-def test_update_player_level():
+def test_player_update_level():
 
     race_name = (fake.word()).capitalize()
     race.insert(name=race_name)
@@ -94,7 +94,7 @@ def test_update_player_level():
     )
 
 
-def test_update_player_race():
+def test_player_update_race():
 
     race_name = (fake.word()).capitalize()
     race.insert(name=race_name)
@@ -123,7 +123,7 @@ def test_update_player_race():
     )
 
 
-def test_update_player_grade():
+def test_player_update_grade():
 
     race_name = (fake.word()).capitalize()
     race.insert(name=race_name)

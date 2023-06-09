@@ -6,7 +6,7 @@ fake = Faker()
 grade = GradeRepository()
 
 
-def test_insert_grade():
+def test_grade_insert():
 
     name = (fake.word()).capitalize()
 
@@ -19,7 +19,7 @@ def test_insert_grade():
     assert response == f'Grade (name = {name})'
 
 
-def test_update_grade_name():
+def test_grade_update_name():
 
     actual_name = (fake.word()).capitalize()
     new_name = (fake.word()).capitalize()
@@ -38,7 +38,7 @@ def test_update_grade_name():
     assert select_response == f'Grade (name = {new_name})'
 
 
-def test_delete_grade():
+def test_grade_delete():
 
     name = (fake.word()).capitalize()
 

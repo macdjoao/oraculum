@@ -6,7 +6,7 @@ fake = Faker()
 race = RaceRepository()
 
 
-def test_insert_race():
+def test_race_insert():
 
     name = (fake.word()).capitalize()
 
@@ -19,7 +19,7 @@ def test_insert_race():
     assert response == f'Race (name = {name})'
 
 
-def test_update_race_name():
+def test_race_update_name():
 
     actual_name = (fake.word()).capitalize()
     new_name = (fake.word()).capitalize()
@@ -38,7 +38,7 @@ def test_update_race_name():
     assert select_response == f'Race (name = {new_name})'
 
 
-def test_delete_race():
+def test_race_delete():
 
     name = (fake.word()).capitalize()
 
