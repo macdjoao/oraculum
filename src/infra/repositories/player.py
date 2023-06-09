@@ -1,6 +1,8 @@
 from src.infra.configs.session import session
+from src.infra.entities.models import Grade as GradeEntity
 from src.infra.entities.models import Player as PlayerEntity
 from src.infra.entities.models import Race as RaceEntity
+from src.infra.repositories.errors.grade import GradeNotFoundError
 from src.infra.repositories.errors.player import (PlayerAlreadyRegisteredError,
                                                   PlayerIncompleteParamsError,
                                                   PlayerNoRecordError,
@@ -61,6 +63,14 @@ class Player:
             if race_not_found == None:
                 raise RaceNotFoundError(race=race.capitalize())
 
+            grade_not_found = (
+                session.query(GradeEntity)
+                .filter(GradeEntity.name == grade.capitalize())
+                .first()
+            )
+            if grade_not_found == None:
+                raise GradeNotFoundError(grade=grade.capitalize())
+
             data_already_registered = (
                 session.query(PlayerEntity)
                 .filter(PlayerEntity.name == name.capitalize())
@@ -85,6 +95,9 @@ class Player:
             session.rollback()
             return err.message
         except RaceNotFoundError as err:
+            session.rollback()
+            return err.message
+        except GradeNotFoundError as err:
             session.rollback()
             return err.message
         finally:
