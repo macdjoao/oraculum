@@ -290,3 +290,19 @@ def test_player_insert_grade_not_found_error():
     race.delete(name=race_name)
 
     assert response == f'Error: Grade {grade_name} not found'
+
+
+def test_player_delete_incomplete_param_error_name():
+
+    response = str(player.delete())
+
+    assert response == f'Error: Missing param "name" in Player'
+
+
+def test_player_delete_not_found_error_name():
+
+    name = fake.first_name()
+
+    response = str(player.delete(name=name))
+
+    assert response == f'Error: Player {name} not found'
