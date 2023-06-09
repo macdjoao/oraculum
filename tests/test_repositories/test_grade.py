@@ -98,6 +98,15 @@ def test_grade_delete_incomplete_param_error_name():
     assert response == f'Error: Missing param "name" in Grade'
 
 
+def test_grade_delete_not_found_error_name():
+
+    name = fake.first_name()
+
+    response = str(grade.delete(name=name))
+
+    assert response == f'Error: Grade {name} not found'
+
+
 def test_grade_update_incomplete_param_error_actual_name():
 
     response = str(grade.update_name())
