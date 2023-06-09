@@ -68,16 +68,20 @@ class Grade:
         finally:
             session.close()
 
-    def delete(self, name: str):
+    def delete(self, name: str = None):
         try:
+            if name == None:
+                raise GradeIncompleteParamsError(missing_param='name')
+
             session.query(GradeEntity).filter(
                 GradeEntity.name == name.capitalize()
             ).delete()
             session.commit()
-            return f'Grade deleted: {name}'
-        except Exception as exc:
+            return f'Grade deleted: {name.capitalize()}'
+
+        except GradeIncompleteParamsError as err:
             session.rollback()
-            return exc
+            return err.message
         finally:
             session.close()
 
