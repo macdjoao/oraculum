@@ -8,7 +8,7 @@
 class RaceSelectAllError(Exception):
     def __init__(self) -> None:
         super().__init__()
-        self.message = 'Error: No record found'
+        self.message = 'Error: No Race record found'
         self.type = 'ErrorType: Repositories/Race/RaceSelectAllError'
 
 
