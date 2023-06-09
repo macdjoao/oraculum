@@ -1,6 +1,7 @@
 from src.infra.configs.session import session
 from src.infra.entities.models import Player as PlayerEntity
-from src.infra.repositories.errors.player import (PlayerIncompleteParamsError,
+from src.infra.repositories.errors.player import (PlayerAlreadyRegisteredError,
+                                                  PlayerIncompleteParamsError,
                                                   PlayerNoRecordError,
                                                   PlayerNotFoundError)
 
@@ -41,8 +42,23 @@ class Player:
         finally:
             session.close()
 
-    def insert(self, name: str, race: str, grade: str):
+    def insert(self, name: str = None, race: str = None, grade: str = None):
         try:
+            if name == None:
+                raise PlayerIncompleteParamsError(missing_param='name')
+            if race == None:
+                raise PlayerIncompleteParamsError(missing_param='race')
+            if grade == None:
+                raise PlayerIncompleteParamsError(missing_param='grade')
+
+            data_already_registered = (
+                session.query(PlayerEntity)
+                .filter(PlayerEntity.name == name.capitalize())
+                .first()
+            )
+            if not data_already_registered == None:
+                raise PlayerAlreadyRegisteredError(player=name.capitalize())
+
             data_insert = PlayerEntity(
                 name=name.capitalize(),
                 race=race.capitalize(),
@@ -51,9 +67,13 @@ class Player:
             session.add(data_insert)
             session.commit()
             return data_insert
-        except Exception as exc:
+
+        except PlayerIncompleteParamsError as err:
             session.rollback()
-            return exc
+            return err.message
+        except PlayerAlreadyRegisteredError as err:
+            session.rollback()
+            return err.message
         finally:
             session.close()
 
