@@ -36,6 +36,18 @@ def test_player_insert():
     )
 
 
+def test_player_delete():
+
+    player_name = (fake.first_name()).capitalize()
+    race_name = (fake.word()).capitalize()
+    grade_name = (fake.word()).capitalize()
+
+    player.insert(name=player_name, race=race_name, grade=grade_name)
+    response = str(player.delete(name=player_name))
+
+    assert response == f'Player deleted: {player_name}'
+
+
 def test_player_update_name():
 
     race_name = (fake.word()).capitalize()
