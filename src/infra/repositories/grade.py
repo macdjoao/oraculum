@@ -1,14 +1,19 @@
 from src.infra.configs.session import session
 from src.infra.entities.models import Grade as GradeEntity
+from src.infra.repositories.errors.grade import GradeNoRecordError
 
 
 class Grade:
     def select_all(self):
         try:
             data = session.query(GradeEntity).all()
+            if data == []:
+                raise GradeNoRecordError
+
             return data
-        except Exception as exc:
-            return exc
+
+        except GradeNoRecordError as err:
+            return err.message
         finally:
             session.close()
 
