@@ -19,6 +19,19 @@ def test_insert_race():
     assert response == f'Race (name = {name})'
 
 
+def test_race_insert_already_registered_error_name():
+
+    already_race_sample = fake.first_name()
+    race.insert(name=already_race_sample)
+
+    response = str(race.insert(name=already_race_sample))
+
+    # Cleaning DB
+    race.delete(name=already_race_sample)
+
+    assert response == f'Error: Race {already_race_sample} already registered'
+
+
 def test_update_race_name():
 
     actual_name = (fake.word()).capitalize()
