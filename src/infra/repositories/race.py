@@ -1,6 +1,7 @@
 from src.infra.configs.session import session
 from src.infra.entities.models import Race as RaceEntity
-from src.infra.repositories.errors.race import (RaceNotFoundError,
+from src.infra.repositories.errors.race import (RaceIncompleteParamsError,
+                                                RaceNotFoundError,
                                                 RaceSelectAllError)
 
 
@@ -16,8 +17,10 @@ class Race:
         finally:
             session.close()
 
-    def select_one(self, name: str):
+    def select_one(self, name: str = None):
         try:
+            if name == None:
+                raise RaceIncompleteParamsError(missing_param='name')
             data = (
                 session.query(RaceEntity)
                 .filter(RaceEntity.name == name.capitalize())
@@ -26,20 +29,24 @@ class Race:
             if data == None:
                 raise RaceNotFoundError(race=name.capitalize())
             return data
+        except RaceIncompleteParamsError as err:
+            return err.message
         except RaceNotFoundError as err:
             return err.message
         finally:
             session.close()
 
-    def insert(self, name: str):
+    def insert(self, name: str = None):
         try:
+            if name == None:
+                raise RaceIncompleteParamsError(missing_param='name')
             data_insert = RaceEntity(name=name.capitalize())
             session.add(data_insert)
             session.commit()
             return data_insert
-        except Exception as exc:
+        except RaceIncompleteParamsError as err:
             session.rollback()
-            return exc
+            return err.message
         finally:
             session.close()
 
