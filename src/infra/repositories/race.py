@@ -50,16 +50,18 @@ class Race:
         finally:
             session.close()
 
-    def delete(self, name: str):
+    def delete(self, name: str = None):
         try:
+            if name == None:
+                raise RaceIncompleteParamsError(missing_param='name')
             session.query(RaceEntity).filter(
                 RaceEntity.name == name.capitalize()
             ).delete()
             session.commit()
             return f'Race deleted: {name.capitalize()}'
-        except Exception as exc:
+        except RaceIncompleteParamsError as err:
             session.rollback()
-            return exc
+            return err.message
         finally:
             session.close()
 
