@@ -169,3 +169,19 @@ def test_player_select_all_no_record_error():
     response = str(player.select_all())
 
     assert response == 'Error: No Player record found'
+
+
+def test_player_select_one_not_found_error():
+
+    name = (fake.word()).capitalize()
+
+    response = str(player.select_one(name=name))
+
+    assert response == f'Error: Player {name} not found'
+
+
+def test_player_select_one_incomplete_param_error_name():
+
+    response = str(player.select_one())
+
+    assert response == f'Error: Missing param "name" in Player'
