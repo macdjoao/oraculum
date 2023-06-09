@@ -1,8 +1,5 @@
-# select_all (nenhuma race cadastrado)
-# select_one (race nao encontrado; payload incompleto)
-# insert (payload incompleto; race ja cadastrado)
-# delete (payload incompleto; race nao encontrado)
-# update (payload incompleto; race nao encontrado; race ja cadastrada)
+# insert (race ja cadastrado)
+# update (race ja cadastrada)
 
 
 class RaceNoRecordError(Exception):
@@ -26,3 +23,11 @@ class RaceIncompleteParamsError(Exception):
         self.missing_param = missing_param
         self.message = f'Error: Missing param "{self.missing_param}" in Race'
         self.type = 'ErrorType: Repositories/Race/RaceIncompleteParamsError'
+
+
+class RaceAlreadyRegisteredError(Exception):
+    def __init__(self, race) -> None:
+        super().__init__()
+        self.race = race
+        self.message = f'Error: Race {self.race} already registered'
+        self.type = 'ErrorType: Repositories/Race/RaceAlreadyRegisteredError'
