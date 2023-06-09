@@ -111,3 +111,24 @@ def test_race_update_not_found_error_actual_name():
     )
 
     assert response == f'Error: Race {actual_name} not found'
+
+
+def test_race_update_already_registered_error_new_name():
+
+    actual_race_sample = fake.first_name()
+    race.insert(name=actual_race_sample)
+
+    already_race_sample = fake.first_name()
+    race.insert(name=already_race_sample)
+
+    response = str(
+        race.update_name(
+            actual_name=actual_race_sample, new_name=already_race_sample
+        )
+    )
+
+    # Cleaning DB
+    race.delete(name=actual_race_sample)
+    race.delete(name=already_race_sample)
+
+    assert response == f'Error: Race {already_race_sample} already registered'
