@@ -1,6 +1,7 @@
 from src.infra.configs.session import session
 from src.infra.entities.models import Race as RaceEntity
-from src.infra.repositories.errors.race import (RaceIncompleteParamsError,
+from src.infra.repositories.errors.race import (RaceAlreadyRegisteredError,
+                                                RaceIncompleteParamsError,
                                                 RaceNoRecordError,
                                                 RaceNotFoundError)
 
@@ -65,15 +66,44 @@ class Race:
         finally:
             session.close()
 
-    def update_name(self, actual_name: str, new_name: str):
+    def update_name(self, actual_name: str = None, new_name: str = None):
         try:
+            if actual_name == None:
+                raise RaceIncompleteParamsError(missing_param='actual_name')
+            if new_name == None:
+                raise RaceIncompleteParamsError(missing_param='new_name')
+
+            data_actual_name = (
+                session.query(RaceEntity)
+                .filter(RaceEntity.name == actual_name.capitalize())
+                .first()
+            )
+            if data_actual_name == None:
+                raise RaceNotFoundError(race=actual_name.capitalize())
+
+            data_new_name = (
+                session.query(RaceEntity)
+                .filter(RaceEntity.name == new_name.capitalize())
+                .first()
+            )
+            if not data_new_name == None:
+                raise RaceAlreadyRegisteredError(race=new_name.capitalize())
+
             session.query(RaceEntity).filter(
                 RaceEntity.name == actual_name.capitalize()
             ).update({'name': new_name.capitalize()})
             session.commit()
             return f'Race updated: {new_name.capitalize()}'
-        except Exception as exc:
+
+        except RaceIncompleteParamsError as err:
             session.rollback()
-            return exc
+            return err.message
+
+        except RaceNotFoundError as err:
+            return err.message
+
+        except RaceAlreadyRegisteredError as err:
+            return err.message
+
         finally:
             session.close()
