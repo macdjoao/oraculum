@@ -48,14 +48,14 @@ def test_delete_race():
     assert response == f'Race deleted: {name}'
 
 
-def test_race_select_all_error():
+def test_race_select_all_no_record_error():
 
     response = str(race.select_all())
 
     assert response == 'Error: No Race record found'
 
 
-def test_race_select_select_one():
+def test_race_select_one_not_found_error():
 
     name = (fake.word()).capitalize()
 
