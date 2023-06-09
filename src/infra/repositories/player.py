@@ -125,6 +125,7 @@ class Player:
             session.rollback()
             return err.message
         except PlayerNotFoundError as err:
+            session.rollback()
             return err.message
         finally:
             session.close()

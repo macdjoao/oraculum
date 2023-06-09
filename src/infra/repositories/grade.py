@@ -64,6 +64,7 @@ class Grade:
             session.rollback()
             return err.message
         except GradeAlreadyRegisteredError as err:
+            session.rollback()
             return err.message
         finally:
             session.close()
@@ -91,6 +92,7 @@ class Grade:
             session.rollback()
             return err.message
         except GradeNotFoundError as err:
+            session.rollback()
             return err.message
         finally:
             session.close()
@@ -129,8 +131,10 @@ class Grade:
             session.rollback()
             return err.message
         except GradeNotFoundError as err:
+            session.rollback()
             return err.message
         except GradeAlreadyRegisteredError as err:
+            session.rollback()
             return err.message
         finally:
             session.close()

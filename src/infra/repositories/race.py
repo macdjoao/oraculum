@@ -64,6 +64,7 @@ class Race:
             session.rollback()
             return err.message
         except RaceAlreadyRegisteredError as err:
+            session.rollback()
             return err.message
         finally:
             session.close()
@@ -91,6 +92,7 @@ class Race:
             session.rollback()
             return err.message
         except RaceNotFoundError as err:
+            session.rollback()
             return err.message
         finally:
             session.close()
@@ -129,8 +131,10 @@ class Race:
             session.rollback()
             return err.message
         except RaceNotFoundError as err:
+            session.rollback()
             return err.message
         except RaceAlreadyRegisteredError as err:
+            session.rollback()
             return err.message
         finally:
             session.close()
