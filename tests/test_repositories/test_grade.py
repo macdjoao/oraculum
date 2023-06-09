@@ -91,6 +91,13 @@ def test_grade_insert_already_registered_error_name():
     assert response == f'Error: Grade {already_grade_name} already registered'
 
 
+def test_grade_delete_incomplete_param_error_name():
+
+    response = str(grade.delete())
+
+    assert response == f'Error: Missing param "name" in Grade'
+
+
 def test_grade_update_incomplete_param_error_actual_name():
 
     response = str(grade.update_name())
