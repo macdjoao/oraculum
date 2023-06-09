@@ -98,6 +98,15 @@ def test_race_delete_incomplete_param_error_name():
     assert response == f'Error: Missing param "name" in Race'
 
 
+def test_race_delete_not_found_error_name():
+
+    name = fake.first_name()
+
+    response = str(race.delete(name=name))
+
+    assert response == f'Error: Race {name} not found'
+
+
 def test_race_update_incomplete_param_error_actual_name():
 
     response = str(race.update_name())
