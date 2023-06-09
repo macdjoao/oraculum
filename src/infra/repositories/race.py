@@ -1,6 +1,7 @@
 from src.infra.configs.session import session
 from src.infra.entities.models import Race as RaceEntity
-from src.infra.repositories.errors.race import RaceSelectAllError
+from src.infra.repositories.errors.race import (RaceNotFoundError,
+                                                RaceSelectAllError)
 
 
 class Race:
@@ -22,9 +23,11 @@ class Race:
                 .filter(RaceEntity.name == name.capitalize())
                 .first()
             )
+            if data == None:
+                raise RaceNotFoundError(race=name.capitalize())
             return data
-        except Exception as exc:
-            return exc
+        except RaceNotFoundError as err:
+            return err.message
         finally:
             session.close()
 
