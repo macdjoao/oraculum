@@ -12,7 +12,9 @@ class Race:
             data = session.query(RaceEntity).all()
             if data == []:
                 raise RaceNoRecordError
+
             return data
+
         except RaceNoRecordError as err:
             return err.message
         finally:
@@ -22,6 +24,7 @@ class Race:
         try:
             if name == None:
                 raise RaceIncompleteParamsError(missing_param='name')
+
             data = (
                 session.query(RaceEntity)
                 .filter(RaceEntity.name == name.capitalize())
@@ -29,7 +32,9 @@ class Race:
             )
             if data == None:
                 raise RaceNotFoundError(race=name.capitalize())
+
             return data
+
         except RaceIncompleteParamsError as err:
             return err.message
         except RaceNotFoundError as err:
@@ -58,10 +63,8 @@ class Race:
         except RaceIncompleteParamsError as err:
             session.rollback()
             return err.message
-
         except RaceAlreadyRegisteredError as err:
             return err.message
-
         finally:
             session.close()
 
@@ -69,11 +72,13 @@ class Race:
         try:
             if name == None:
                 raise RaceIncompleteParamsError(missing_param='name')
+
             session.query(RaceEntity).filter(
                 RaceEntity.name == name.capitalize()
             ).delete()
             session.commit()
             return f'Race deleted: {name.capitalize()}'
+
         except RaceIncompleteParamsError as err:
             session.rollback()
             return err.message
@@ -84,6 +89,7 @@ class Race:
         try:
             if actual_name == None:
                 raise RaceIncompleteParamsError(missing_param='actual_name')
+
             if new_name == None:
                 raise RaceIncompleteParamsError(missing_param='new_name')
 
@@ -112,12 +118,9 @@ class Race:
         except RaceIncompleteParamsError as err:
             session.rollback()
             return err.message
-
         except RaceNotFoundError as err:
             return err.message
-
         except RaceAlreadyRegisteredError as err:
             return err.message
-
         finally:
             session.close()
