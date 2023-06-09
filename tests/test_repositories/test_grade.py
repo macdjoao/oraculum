@@ -46,3 +46,10 @@ def test_delete_grade():
     response = str(grade.delete(name=name))
 
     assert response == f'Grade deleted: {name}'
+
+
+def test_grade_select_all_no_record_error():
+
+    response = str(grade.select_all())
+
+    assert response == 'Error: No Grade record found'
