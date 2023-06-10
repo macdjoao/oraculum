@@ -334,3 +334,41 @@ def test_player_update_not_found_error_actual_name():
     )
 
     assert response == f'Error: Player {actual_name} not found'
+
+
+# TODO
+
+
+def test_player_update_already_registered_error_new_name():
+
+    race_sample = fake.word()
+    race.insert(name=race_sample)
+
+    grade_sample = fake.word()
+    grade.insert(name=grade_sample)
+
+    first_player_sample = fake.first_name()
+    player.insert(
+        name=first_player_sample, race=race_sample, grade=grade_sample
+    )
+
+    second_player_sample = fake.first_name()
+    player.insert(
+        name=second_player_sample, race=race_sample, grade=grade_sample
+    )
+
+    response = str(
+        player.update_name(
+            actual_name=first_player_sample, new_name=second_player_sample
+        )
+    )
+
+    # Cleaning DB
+    player.delete(name=first_player_sample)
+    player.delete(name=second_player_sample)
+    race.delete(name=race_sample)
+    grade.delete(name=grade_sample)
+
+    assert (
+        response == f'Error: Player {second_player_sample} already registered'
+    )
