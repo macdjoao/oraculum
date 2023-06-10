@@ -213,17 +213,45 @@ class Player:
         finally:
             session.close()
 
-    def update_race(self, name: str, race: str):
+    def update_race(self, name: str = None, race: str = None):
         try:
+            if name == None:
+                raise PlayerIncompleteParamsError(missing_param='name')
+
+            if race == None:
+                raise PlayerIncompleteParamsError(missing_param='race')
+
+            data = (
+                session.query(PlayerEntity)
+                .filter(PlayerEntity.name == name.capitalize())
+                .first()
+            )
+            if data == None:
+                raise PlayerNotFoundError(player=name.capitalize())
+
+            race_not_found = (
+                session.query(RaceEntity)
+                .filter(RaceEntity.name == race.capitalize())
+                .first()
+            )
+            if race_not_found == None:
+                raise RaceNotFoundError(race=race.capitalize())
+
             session.query(PlayerEntity).filter(
                 PlayerEntity.name == name.capitalize()
             ).update({'race': race.capitalize()})
             session.commit()
             return f'Player updated: {name.capitalize()}'
 
-        except Exception as exc:
+        except PlayerIncompleteParamsError as err:
             session.rollback()
-            return exc
+            return err.message
+        except PlayerNotFoundError as err:
+            session.rollback()
+            return err.message
+        except RaceNotFoundError as err:
+            session.rollback()
+            return err.message
         finally:
             session.close()
 
