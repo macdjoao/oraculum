@@ -1,9 +1,3 @@
-# insert (raça/classe nao encontrada)
-# update_level (level invalido)
-# update_race (raça nao encontrada)
-# update_grade (classe nao encontrada)
-
-
 class PlayerNoRecordError(Exception):
     def __init__(self) -> None:
         super().__init__()
