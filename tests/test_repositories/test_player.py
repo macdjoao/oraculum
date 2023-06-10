@@ -387,3 +387,13 @@ def test_player_update_level_incomplete_param_error_level():
     response = str(player.update_level(name=name))
 
     assert response == f'Error: Missing param "level" in Player'
+
+
+def test_player_update_level_not_int():
+
+    name = fake.first_name()
+    level = fake.word()
+
+    response = str(player.update_level(name=name, level=level))
+
+    assert response == f'Error: Param "level" is not a integer'
