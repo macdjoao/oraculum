@@ -306,3 +306,31 @@ def test_player_delete_not_found_error_name():
     response = str(player.delete(name=name))
 
     assert response == f'Error: Player {name} not found'
+
+
+def test_player_update_incomplete_param_error_actual_name():
+
+    response = str(player.update_name())
+
+    assert response == f'Error: Missing param "actual_name" in Player'
+
+
+def test_player_update_incomplete_param_error_new_name():
+
+    actual_name = fake.first_name()
+
+    response = str(player.update_name(actual_name=actual_name))
+
+    assert response == f'Error: Missing param "new_name" in Player'
+
+
+def test_player_update_not_found_error_actual_name():
+
+    actual_name = fake.first_name()
+    new_name = fake.first_name()
+
+    response = str(
+        player.update_name(actual_name=actual_name, new_name=new_name)
+    )
+
+    assert response == f'Error: Player {actual_name} not found'
