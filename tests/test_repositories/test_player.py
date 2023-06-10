@@ -407,3 +407,12 @@ def test_player_update_level_player_not_found():
     response = str(player.update_level(name=name, level=new_level))
 
     assert response == f'Error: Player {name} not found'
+
+
+def test_player_update_race_incomplete_param_error_name():
+
+    race = fake.word()
+
+    response = str(player.update_race(race=race))
+
+    assert response == f'Error: Missing param "name" in Player'
