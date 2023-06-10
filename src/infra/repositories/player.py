@@ -121,6 +121,7 @@ class Player:
             ).delete()
             session.commit()
             return f'Player deleted: {name.capitalize()}'
+
         except PlayerIncompleteParamsError as err:
             session.rollback()
             return err.message
@@ -130,16 +131,47 @@ class Player:
         finally:
             session.close()
 
-    def update_name(self, actual_name: str, new_name: str):
+    def update_name(self, actual_name: str = None, new_name: str = None):
         try:
+            if actual_name == None:
+                raise PlayerIncompleteParamsError(missing_param='actual_name')
+
+            if new_name == None:
+                raise PlayerIncompleteParamsError(missing_param='new_name')
+
+            data = (
+                session.query(PlayerEntity)
+                .filter(PlayerEntity.name == actual_name.capitalize())
+                .first()
+            )
+            if data == None:
+                raise PlayerNotFoundError(player=actual_name.capitalize())
+
+            data_new_name = (
+                session.query(PlayerEntity)
+                .filter(PlayerEntity.name == new_name.capitalize())
+                .first()
+            )
+            if not data_new_name == None:
+                raise PlayerAlreadyRegisteredError(
+                    player=new_name.capitalize()
+                )
+
             session.query(PlayerEntity).filter(
                 PlayerEntity.name == actual_name.capitalize()
             ).update({'name': new_name.capitalize()})
             session.commit()
             return f'Player updated: {new_name.capitalize()}'
-        except Exception as exc:
+
+        except PlayerIncompleteParamsError as err:
             session.rollback()
-            return exc
+            return err.message
+        except PlayerNotFoundError as err:
+            session.rollback()
+            return err.message
+        except PlayerAlreadyRegisteredError as err:
+            session.rollback()
+            return err.message
         finally:
             session.close()
 
@@ -150,6 +182,7 @@ class Player:
             ).update({'level': level})
             session.commit()
             return f'Player updated: {name.capitalize()}'
+
         except Exception as exc:
             session.rollback()
             return exc
@@ -163,6 +196,7 @@ class Player:
             ).update({'race': race.capitalize()})
             session.commit()
             return f'Player updated: {name.capitalize()}'
+
         except Exception as exc:
             session.rollback()
             return exc
@@ -176,6 +210,7 @@ class Player:
             ).update({'grade': grade.capitalize()})
             session.commit()
             return f'Player updated: {name.capitalize()}'
+
         except Exception as exc:
             session.rollback()
             return exc
