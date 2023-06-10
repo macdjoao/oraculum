@@ -392,8 +392,18 @@ def test_player_update_level_incomplete_param_error_level():
 def test_player_update_level_not_int():
 
     name = fake.first_name()
-    level = fake.word()
+    new_level = fake.word()
 
-    response = str(player.update_level(name=name, level=level))
+    response = str(player.update_level(name=name, level=new_level))
 
     assert response == f'Error: Param "level" is not a integer'
+
+
+def test_player_update_level_player_not_found():
+
+    name = fake.last_name()
+    new_level = random.randint(2, 15)
+
+    response = str(player.update_level(name=name, level=new_level))
+
+    assert response == f'Error: Player {name} not found'
