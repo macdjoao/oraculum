@@ -37,3 +37,10 @@ class PlayerAlreadyRegisteredError(Exception):
         self.type = (
             'ErrorType: Repositories/Player/PlayerAlreadyRegisteredError'
         )
+
+
+class PlayerLevelNotIntError(Exception):
+    def __init__(self) -> None:
+        super().__init__()
+        self.message = f'Error: Param "level" is not a integer'
+        self.type = 'ErrorType: Repositories/Player/PlayerLevelNotIntError'
