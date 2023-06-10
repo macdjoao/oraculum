@@ -5,6 +5,7 @@ from src.infra.entities.models import Race as RaceEntity
 from src.infra.repositories.errors.grade import GradeNotFoundError
 from src.infra.repositories.errors.player import (PlayerAlreadyRegisteredError,
                                                   PlayerIncompleteParamsError,
+                                                  PlayerLevelNotIntError,
                                                   PlayerNoRecordError,
                                                   PlayerNotFoundError)
 from src.infra.repositories.errors.race import RaceNotFoundError
@@ -175,17 +176,40 @@ class Player:
         finally:
             session.close()
 
-    def update_level(self, name: str, level: int):
+    def update_level(self, name: str = None, level: int = None):
         try:
+            if name == None:
+                raise PlayerIncompleteParamsError(missing_param='name')
+
+            if level == None:
+                raise PlayerIncompleteParamsError(missing_param='level')
+
+            if not isinstance(level, int):
+                raise PlayerLevelNotIntError
+
+            data = (
+                session.query(PlayerEntity)
+                .filter(PlayerEntity.name == name.capitalize())
+                .first()
+            )
+            if data == None:
+                raise PlayerNotFoundError(player=name.capitalize())
+
             session.query(PlayerEntity).filter(
                 PlayerEntity.name == name.capitalize()
             ).update({'level': level})
             session.commit()
             return f'Player updated: {name.capitalize()}'
 
-        except Exception as exc:
+        except PlayerIncompleteParamsError as err:
             session.rollback()
-            return exc
+            return err.message
+        except PlayerLevelNotIntError as err:
+            session.rollback()
+            return err.message
+        except PlayerNotFoundError as err:
+            session.rollback()
+            return err.message
         finally:
             session.close()
 
