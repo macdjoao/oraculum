@@ -378,3 +378,12 @@ def test_player_update_level_incomplete_param_error_name():
     response = str(player.update_level(level=new_level))
 
     assert response == f'Error: Missing param "name" in Player'
+
+
+def test_player_update_level_incomplete_param_error_level():
+
+    name = fake.first_name()
+
+    response = str(player.update_level(name=name))
+
+    assert response == f'Error: Missing param "level" in Player'
