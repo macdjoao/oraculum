@@ -308,14 +308,14 @@ def test_player_delete_not_found_error_name():
     assert response == f'Error: Player {name} not found'
 
 
-def test_player_update_incomplete_param_error_actual_name():
+def test_player_update_name_incomplete_param_error_actual_name():
 
     response = str(player.update_name())
 
     assert response == f'Error: Missing param "actual_name" in Player'
 
 
-def test_player_update_incomplete_param_error_new_name():
+def test_player_update_name_incomplete_param_error_new_name():
 
     actual_name = fake.first_name()
 
@@ -324,7 +324,7 @@ def test_player_update_incomplete_param_error_new_name():
     assert response == f'Error: Missing param "new_name" in Player'
 
 
-def test_player_update_not_found_error_actual_name():
+def test_player_update_name_not_found_error_actual_name():
 
     actual_name = fake.first_name()
     new_name = fake.first_name()
@@ -336,10 +336,7 @@ def test_player_update_not_found_error_actual_name():
     assert response == f'Error: Player {actual_name} not found'
 
 
-# TODO
-
-
-def test_player_update_already_registered_error_new_name():
+def test_player_update_name_already_registered_error_new_name():
 
     race_sample = fake.word()
     race.insert(name=race_sample)
@@ -372,3 +369,12 @@ def test_player_update_already_registered_error_new_name():
     assert (
         response == f'Error: Player {second_player_sample} already registered'
     )
+
+
+def test_player_update_level_incomplete_param_error_name():
+
+    new_level = random.randint(2, 15)
+
+    response = str(player.update_level(level=new_level))
+
+    assert response == f'Error: Missing param "name" in Player'
