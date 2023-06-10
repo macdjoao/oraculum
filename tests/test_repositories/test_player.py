@@ -434,3 +434,26 @@ def test_player_update_race_player_not_found():
     response = str(player.update_race(name=name, race=new_race))
 
     assert response == f'Error: Player {name} not found'
+
+
+def test_player_update_race_not_found():
+
+    race_sample = fake.word()
+    race.insert(name=race_sample)
+
+    grade_sample = fake.word()
+    grade.insert(name=grade_sample)
+
+    player_name = fake.first_name()
+    player.insert(name=player_name, race=race_sample, grade=grade_sample)
+
+    new_race = (fake.word()).capitalize()
+
+    response = str(player.update_race(name=player_name, race=new_race))
+
+    # Cleaning DB
+    player.delete(name=player_name)
+    race.delete(name=race_sample)
+    grade.delete(name=grade_sample)
+
+    assert response == f'Error: Race {new_race} not found'
