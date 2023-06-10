@@ -255,16 +255,44 @@ class Player:
         finally:
             session.close()
 
-    def update_grade(self, name: str, grade: str):
+    def update_grade(self, name: str = None, grade: str = None):
         try:
+            if name == None:
+                raise PlayerIncompleteParamsError(missing_param='name')
+
+            if grade == None:
+                raise PlayerIncompleteParamsError(missing_param='grade')
+
+            data = (
+                session.query(PlayerEntity)
+                .filter(PlayerEntity.name == name.capitalize())
+                .first()
+            )
+            if data == None:
+                raise PlayerNotFoundError(player=name.capitalize())
+
+            grade_not_found = (
+                session.query(GradeEntity)
+                .filter(GradeEntity.name == grade.capitalize())
+                .first()
+            )
+            if grade_not_found == None:
+                raise GradeNotFoundError(grade=grade.capitalize())
+
             session.query(PlayerEntity).filter(
                 PlayerEntity.name == name.capitalize()
             ).update({'grade': grade.capitalize()})
             session.commit()
             return f'Player updated: {name.capitalize()}'
 
-        except Exception as exc:
+        except PlayerIncompleteParamsError as err:
             session.rollback()
-            return exc
+            return err.message
+        except PlayerNotFoundError as err:
+            session.rollback()
+            return err.message
+        except GradeNotFoundError as err:
+            session.rollback()
+            return err.message
         finally:
             session.close()
