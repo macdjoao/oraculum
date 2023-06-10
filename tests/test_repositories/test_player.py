@@ -401,7 +401,7 @@ def test_player_update_level_not_int():
 
 def test_player_update_level_player_not_found():
 
-    name = fake.last_name()
+    name = fake.first_name()
     new_level = random.randint(2, 15)
 
     response = str(player.update_level(name=name, level=new_level))
@@ -416,3 +416,12 @@ def test_player_update_race_incomplete_param_error_name():
     response = str(player.update_race(race=race))
 
     assert response == f'Error: Missing param "name" in Player'
+
+
+def test_player_update_race_incomplete_param_error_race():
+
+    name = fake.first_name()
+
+    response = str(player.update_race(name=name))
+
+    assert response == f'Error: Missing param "race" in Player'
