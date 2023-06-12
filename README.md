@@ -1,5 +1,5 @@
 # Oraculum
-Um projeto simples para estudos e aplicação de SQLAlchemy e PyTest, seguindo os padrões de Clean Code e Clean Architecture.
+Um projeto simples para estudos e aplicação de SQLAlchemy e PyTest, seguindo os padrões de Clean Code.
 
 ## Resumo
 Oraculum é uma aplicação que tem o objetivo de armazenar fichas de personagens de RPG.
