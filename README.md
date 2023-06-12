@@ -22,7 +22,7 @@ Oraculum é uma aplicação que tem o objetivo de armazenar fichas de personagen
 Pull requests são bem vindas. Caso tenha interesse em contribuir com o projeto, você pode ler as sugestões iniciais no trecho To Do desse arquivo, ou mesmo analisar o código e sugerir novas features ou refatorações.
 
 ## To Do
-[] Separar "Base" e as entidades (em models.py) em arquivos próprios (por ora não foi possível, pois "target_metadata = Base.metadata" (em alembic/env.py) não reconhece as entidades quando "Base" e as entidades estão em arquivos próprios).
+[ ] Separar "Base" e as entidades (em models.py) em arquivos próprios (por ora não foi possível, pois "target_metadata = Base.metadata" (em alembic/env.py) não reconhece as entidades quando "Base" e as entidades estão em arquivos próprios).
 
 ## Licença
 
