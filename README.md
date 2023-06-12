@@ -1,5 +1,5 @@
 # Oraculum
-Um projeto simples para estudos e aplicação de SQLAlchemy e PyTest, seguindo os padrões de Clean Code e Clean Architecture.
+Um projeto simples para estudos e aplicação de SQLAlchemy e PyTest, seguindo os padrões de Clean Code.
 
 ## Resumo
 Oraculum é uma aplicação que tem o objetivo de armazenar fichas de personagens de RPG.
@@ -7,12 +7,12 @@ Oraculum é uma aplicação que tem o objetivo de armazenar fichas de personagen
 ## Instalação
 1. Clone o projeto em seu computador:
 ```sh
-you@pc:~$ git clone https://github.com/macdjoao/oraculum.git
+$ git clone https://github.com/macdjoao/oraculum.git
 ```
 
 2. Instale as dependências utilizando Poetry (se preferir, crie antes seu ambiente virtual com *you@pc:~/oraculum$ poetry shell*):
 ```sh
-you@pc:~/oraculum$ poetry install
+~/oraculum$ poetry install
 ```
 
 ## Configuração
@@ -20,12 +20,12 @@ you@pc:~/oraculum$ poetry install
 
 2. Crie e execute o container Docker:
 ```sh
-you@pc:~/oraculum$ docker-compose up -d
+~/oraculum$ docker-compose up -d
 ```
 
 3. Aplique as migrações utilizando Alembic:
 ```sh
-you@pc:~/oraculum$ alembic upgrade head
+~/oraculum$ alembic upgrade head
 ```
 ## Uso
 Para utilizar as funcionalidades, crie um arquivo **.py** e importe as classes que estão nos arquivos **.py** em **src/infra/repositories/**. Salve instâncias das classes em variáveis, e use as funções como preferir:
@@ -73,7 +73,7 @@ your_player.delete(name='Doe')
 Para executar os testes:
 
 ```sh
-you@pc:~/oraculum$ pytest -v
+~/oraculum$ pytest -v
 ```
 
 Nota:
