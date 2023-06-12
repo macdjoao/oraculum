@@ -24,7 +24,22 @@ you@pc:~/oraculum$ docker-compose up -d
 you@pc:~/oraculum$ alembic upgrade head
 ```
 ## Uso
-Para utilizar as funcionalidades, crie um arquivo **.py** e importe as classes que estão nos arquivos **.py** em **src/infra/repositories/**. Salve instâncias das classes em variáveis, e use as funções como preferir.
+Para utilizar as funcionalidades, crie um arquivo **.py** e importe as classes que estão nos arquivos **.py** em **src/infra/repositories/**. Salve instâncias das classes em variáveis, e use as funções como preferir:
+
+```python
+from src.infra.repositories.player import Player as PlayerRepository
+
+my_player = PlayerRepository()
+
+my_player.insert(name='John', race='Elf', grade='Archer')
+my_player.select_all()
+my_player.select_one(name='John')
+my_player.update_name(actual_name='John', new_name='Doe')
+my_player.update_grade(name='Doe', grade='Warrior')
+my_player.update_race(name='Doe', race='Dwarf')
+my_player.update_level(name='Doe', level=2)
+my_player.delete(name='Doe')
+```
 
 ## Testes Unitários
 Para executar os testes:
