@@ -80,7 +80,7 @@ Nota:
 
 > Para os testes "test_grade_select_all_no_record_error", "test_race_select_all_no_record_error" e "test_player_select_all_no_record_error" passarem, a base de dados deve estar sem registros.
 
-!(tests-printscr.png)
+![Tests PrintScreen](tests-printscr.png)
 
 ## Informações sobre o desenvolvimento
 - [SQLAlchemy](https://www.sqlalchemy.org/) e [Alembic](https://alembic.sqlalchemy.org/en/latest/): ORM e Migrações
